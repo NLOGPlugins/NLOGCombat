@@ -21,7 +21,6 @@ class PlayerShootEvent extends Event implements Cancellable {
 	/**
 	 * 
 	 * @param Player $shooter
-	 * @param int $damage
 	 */
 	public function __construct(Player $shooter) {
 		$this->player = $shooter;
