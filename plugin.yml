@@ -1,0 +1,6 @@
+name: NLOGCombat
+author: NLOG
+version: 1.0
+main: nlog\NLOGCombat\Main
+api:
+- 3.0.0-ALPHA7
