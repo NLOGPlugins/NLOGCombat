@@ -10,28 +10,31 @@
 ```PHP
 <?php
 
-namespace nlog\NLOGTest;
+namespace nlog;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerItemHeldEvent;
-use pocketmine\item\Item;
+use ifteam\SimpleArea\database\area\AreaProvider;
+use ifteam\SimpleArea\database\area\AreaSection;
+use nlog\NLOGCombat\PlayerShootEvent;
 
-class Main extends PluginBase implements Listener{
+class example extends PluginBase implements Listener {
 	
- 	 public function onEnable(){
-    	$this->getServer()->getPluginManager()->registerEvents($this, $this);
-    	$this->getLogger()->notice("테스트용  플긴");
-    	$this->getLogger()->notice("Made by NLOG (nlog.kro.kr)");
- 	 }
- 	 
- 	 public function onHandlePickUpItem(PlayerItemHeldEvent $ev) {
- 	 	$player = $ev->getPlayer();
- 	 	if ($ev->getItem()->getId() === Item::TORCH) {
- 	 		$ev->getPlayer()->getLevel()->setBlockLightAt($player->x, $player->y, $player->z, 14);
- 	 	}
- 	 }
-  }
-  
-?>
+	public function onEnable() {
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+	}
+	
+	/**
+	 * 
+	 * @priority HIGHEST
+	 */
+	public function handleShoot (PlayerShootEvent $event) {
+		$player = $event->getPlayer();
+		$areaSection = AreaProvider::getInstance()->getArea($player->getLevel(), $player->x, $player->z);
+		if ($areaSection instanceof AreaSection) {
+			$event->setCancelled(true);
+			$player->sendMessage("땅에서 총으로 놀지마!!(ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ)");
+		}
+	}
+}
 ```
